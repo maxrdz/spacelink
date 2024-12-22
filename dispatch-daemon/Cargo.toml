@@ -1,0 +1,13 @@
+[package]
+name = "dispatch-daemon"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+
+[dependencies]
+cfg-if.workspace = true
+modemmanager = { git = "https://github.com/omnect/modemmanager.git" }
+sqlite = "0.36"
+zbus.workspace = true

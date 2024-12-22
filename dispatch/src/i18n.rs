@@ -42,7 +42,7 @@ pub fn localizer() -> Box<dyn Localizer> {
 }
 
 #[derive(RustEmbed)]
-#[folder = "i18n/"]
+#[folder = "../i18n/"]
 struct Localizations;
 
 pub static LANGUAGE_LOADER: LazyLock<FluentLanguageLoader> = LazyLock::new(|| {

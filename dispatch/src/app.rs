@@ -33,9 +33,9 @@ const REPOSITORY: &str = env!("CARGO_PKG_REPOSITORY");
 
 cfg_if::cfg_if! {
     if #[cfg(debug_assertions)] {
-        const APP_ICON: &[u8] = include_bytes!("../res/icons/hicolor/scalable/apps/icon-debug.svg");
+        const APP_ICON: &[u8] = include_bytes!("../../resources/icons/hicolor/scalable/apps/icon-debug.svg");
     } else {
-        const APP_ICON: &[u8] = include_bytes!("../res/icons/hicolor/scalable/apps/icon.svg");
+        const APP_ICON: &[u8] = include_bytes!("../../resources/icons/hicolor/scalable/apps/icon.svg");
     }
 }
 

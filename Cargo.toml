@@ -1,10 +1,22 @@
-[package]
-name = "dispatch"
+[workspace]
+resolver = "2"
+members = [
+  "dispatch",
+  "dispatch-daemon",
+]
+default-members = [
+  "dispatch",
+  "dispatch-daemon",
+]
+
+[workspace.package]
+license = "GPL-3.0-or-later"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.81"
-authors = ["Max Rodriguez <me@maxrdz.com>"]
-license-file = "COPYING"
+authors = [
+  "Max Rodriguez <me@maxrdz.com>"
+]
 repository = "https://gitlab.com/maxrdz/dispatch"
 
 [workspace.metadata.cross.build]
@@ -20,25 +32,15 @@ pre-build = [
     "dpkg --force-all -i *.deb",
 ]
 
-[build-dependencies]
-vergen = { version = "8", features = ["git", "gitcl"] }
-
-[dependencies]
+[workspace.dependencies]
 cfg-if = "1"
-futures-util = "0.3.31"
-i18n-embed-fl = "0.9.2"
-modemmanager = { git = "https://github.com/omnect/modemmanager.git" }
-open = "5.3.0"
-rust-embed = "8.5.0"
-sqlite = "0.36"
-tokio = { version = "1.41.0", features = ["full"] }
-zspell = "0.5"
+zbus = "5.2"
 
-[dependencies.i18n-embed]
+[workspace.dependencies.i18n-embed]
 version = "0.15"
 features = ["fluent-system", "desktop-requester"]
 
-[dependencies.libcosmic]
+[workspace.dependencies.libcosmic]
 git = "https://github.com/pop-os/libcosmic.git"
 # See https://github.com/pop-os/libcosmic/blob/master/Cargo.toml for available features.
 features = [
