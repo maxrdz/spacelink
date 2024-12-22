@@ -16,7 +16,9 @@
         "--share=ipc",
         "--env=RUST_BACKTRACE=0",
         "--talk-name=org.sigxcpu.Feedback",
-        "--system-talk-name=org.freedesktop.ModemManager1"
+        "--system-talk-name=org.freedesktop.ModemManager1",
+        "--talk-name=com.system76.CosmicSettingsDaemon",
+        "--filesystem=xdg-config/cosmic:rw"
     ],
     "build-options" : {
         "append-path" : "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm18/bin",

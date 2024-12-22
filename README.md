@@ -11,6 +11,10 @@ To build Spacelink, run:
     meson setup build -Dprofile=debug
     meson compile -C build
 
+To build the flatpak, run:
+
+    flatpak run org.flatpak.Builder --user --install --force-clean flatpakbuild/ com.maxrdz.Spacelink.json
+
 ## Installing
 
 To install a build of Spacelink, run:
