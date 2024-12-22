@@ -1,13 +1,10 @@
 [workspace]
 resolver = "2"
 members = [
-  "dispatch",
-  "dispatchd",
+  "spacelink",
+  "spacelinkd",
 ]
-default-members = [
-  "dispatch",
-  "dispatchd",
-]
+default-members = []
 
 [workspace.package]
 license = "GPL-3.0-or-later"
@@ -17,7 +14,7 @@ rust-version = "1.81"
 authors = [
   "Max Rodriguez <me@maxrdz.com>"
 ]
-repository = "https://gitlab.com/maxrdz/dispatch"
+repository = "https://gitlab.com/maxrdz/spacelink"
 
 [workspace.metadata.cross.build]
 default-target = "aarch64-unknown-linux-gnu"

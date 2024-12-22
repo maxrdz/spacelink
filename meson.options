@@ -6,7 +6,7 @@ option(
     'debug'
   ],
   value: 'release',
-  description: 'The build profile for Dispatch. `release` or `debug`.'
+  description: 'The build profile for Spacelink. `release` or `debug`.'
 )
 option(
   'target',

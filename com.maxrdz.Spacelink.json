@@ -1,5 +1,5 @@
 {
-    "app-id" : "com.maxrdz.Dispatch",
+    "app-id" : "com.maxrdz.Spacelink",
     "runtime" : "org.freedesktop.Platform",
     "runtime-version" : "24.08",
     "sdk" : "org.freedesktop.Sdk",
@@ -7,7 +7,7 @@
         "org.freedesktop.Sdk.Extension.rust-stable",
 	    "org.freedesktop.Sdk.Extension.llvm18"
     ],
-    "command" : "dispatch",
+    "command" : "spacelink",
     "finish-args" : [
         "--device=dri",
         "--socket=wayland",
@@ -97,6 +97,24 @@
             ]
         },
         {
+            "name": "feedbackd",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Ddaemon=false",
+                "-Dman=false",
+                "-Dgtk_doc=false",
+                "-Dtests=false",
+                "-Dvapi=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://source.puri.sm/Librem5/feedbackd",
+                    "branch": "main"
+                }
+            ]
+        },
+        {
             "name": "just",
             "buildsystem": "simple",
             "build-commands": [
@@ -143,7 +161,7 @@
             ]
         },
         {
-            "name" : "dispatch",
+            "name" : "spacelink",
             "buildsystem" : "meson",
             "builddir" : true,
             "sources" : [

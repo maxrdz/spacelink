@@ -4,7 +4,7 @@ include:
 
 variables:
   ORGANIZATION_NAME: "maxrdz"
-  PROJECT_NAME: "dispatch"
+  PROJECT_NAME: "spacelink"
   MIRROR_HOST: "github.com"
   TYPOS_UPSTREAM: "https://github.com/crate-ci/typos/releases/download/v1.22.7/typos-v1.22.7-x86_64-unknown-linux-musl.tar.gz"
   GCP_PROJECT_NUMBER: 155457831646

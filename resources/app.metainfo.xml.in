@@ -4,7 +4,7 @@
   <id>@APP_ID@</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
-  <name>Dispatch</name>
+  <name>Spacelink</name>
   <summary>Send SMS/MMS messages</summary>
   <description>
     <p>A simple SMS application for the COSMIC shell.</p>
@@ -44,7 +44,7 @@
     <control>touch</control>
   </supports>
   <releases>
-    <!-- Update release date on real first release of Memories.
+    <!-- Update release date on real first release of Spacelink.
          CI/CD requires a release tag to be present in appdata file. -->
     <release version="0.1.0" date="2024-12-18">
       <url type="details">@PROJECT_GIT@/-/raw/master/CHANGELOG</url>
@@ -61,7 +61,7 @@
     <category>InstantMessaging</category>
   </categories>
   <keywords>
-    <keyword translate="yes">dispatch</keyword>
+    <keyword translate="yes">spacelink</keyword>
     <keyword translate="yes">messages</keyword>
     <keyword translate="yes">text</keyword>
     <keyword translate="yes">sms</keyword>

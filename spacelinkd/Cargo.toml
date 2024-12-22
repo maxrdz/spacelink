@@ -1,5 +1,5 @@
 [package]
-name = "dispatchd"
+name = "spacelinkd"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true

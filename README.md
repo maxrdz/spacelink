@@ -1,4 +1,4 @@
-# Dispatch
+# Spacelink
 
 A graphical application for sending SMS/MMS messages, built with libcosmic
 for the COSMIC desktop environment, and in the future, the COSMIC mobile
@@ -6,14 +6,14 @@ shell.
 
 ## Building
 
-To build Dispatch, run:
+To build Spacelink, run:
 
     meson setup build -Dprofile=debug
     meson compile -C build
 
 ## Installing
 
-To install a build of Dispatch, run:
+To install a build of Spacelink, run:
 
     meson install -C build
 

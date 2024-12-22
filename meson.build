@@ -1,4 +1,4 @@
-project('dispatch', 'rust',
+project('spacelink', 'rust',
           version: '0.1.0',
     meson_version: '>= 1.1.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
@@ -14,23 +14,19 @@ dependency('gio-2.0', version: '>= 2.80')
 dependency('glib-2.0', version: '>= 2.80')
 dependency('libfeedback-0.0', version: '>= 0', required: get_option('use-feedbackd'))
 
-app_name = 'Dispatch'
-base_id = 'com.maxrdz.Dispatch'
-base_binary = 'dispatch'
+app_name = 'Spacelink'
+base_id = 'com.maxrdz.Spacelink'
+base_binary = 'spacelink'
 base_daemon_binary = base_binary + 'd'
-git_url = 'https://gitlab.com/maxrdz/dispatch'
+git_url = 'https://gitlab.com/maxrdz/spacelink'
 
 # Cargo build options and environment variables
 cargo_opts = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
 cargo_opts += [ '--target-dir', meson.project_build_root()  / 'target' ]
 cargo_opts += [ '--color=always' ]
 
-cargo_build_opts = []
-
 cargo_env = environment()
 cargo_env.set('CARGO_HOME', meson.project_build_root() / 'cargo-home')
-
-feature_flags = []
 
 if get_option('profile') == 'release'
   cargo_opts += [ '--release' ]
@@ -41,7 +37,7 @@ if get_option('profile') == 'release'
   binary = base_binary
   daemon_binary = base_daemon_binary
 
-  message('Building Dispatch for Release.')
+  message('Building Spacelink for Release.')
 else
   rust_target = 'debug'
 
@@ -50,10 +46,10 @@ else
   binary = '@0@-debug'.format(base_binary)
   daemon_binary = '@0@-debug'.format(base_daemon_binary)
 
-  message('Building Dispatch for Debug.')
+  message('Building Spacelink for Debug.')
 endif
 
-target_dir = 'target' / rust_target
+target_dir = meson.project_build_root() / 'target' / rust_target
 
 # ---------- Cross Compilation ---------- #
 
@@ -83,38 +79,6 @@ if get_option('target') != ''
   )
 endif
 
-out_artifacts = []
-
-if get_option('daemon-only')
-  cargo_build_opts += [ '--package', base_daemon_binary ]
-  out_artifacts = [ base_binary ]
-else
-  cargo_build_opts += [ '--workspace' ]
-  out_artifacts = [ base_binary, base_daemon_binary ]
-endif
-
-if get_option('use-feedbackd')
-  feature_flags += [ 'use-feedbackd' ]
-endif
-
-# Convert FF list to argument string for --features option
-cargo_ff_arg = ''
-first_flag = false
-foreach ff : feature_flags
-  if first_flag == false
-    cargo_ff_arg += ff
-    first_flag = true
-  else
-    cargo_ff_arg += ',' + ff
-  endif
-endforeach
-
-if feature_flags.length() > 0
-  cargo_opts += [ '--no-default-features', '--features', cargo_ff_arg ]
-else
-  message('Building with default feature flags.')
-endif
-
 # Install Directories
 rootdir = ''
 prefix = get_option('prefix')
@@ -132,21 +96,11 @@ bin_src = meson.project_build_root() / binary
 bin_dst = base_dir / 'bin' / binary
 
 subdir('resources')
-subdir('dispatch')
 
-custom_target(
-  'cargo-build',
-  build_by_default: true,
-  build_always_stale: true,
-  output: out_artifacts,
-  console: true,
-  install: true,
-  install_dir: get_option('bindir'),
-  env: cargo_env,
-  command: [
-    cargo_bin, 'build', cargo_opts, cargo_build_opts
-  ]
-)
+if get_option('daemon-only') != true
+  subdir('spacelink')
+endif
+subdir('spacelinkd')
 
 clippy = custom_target(
   'clippy',

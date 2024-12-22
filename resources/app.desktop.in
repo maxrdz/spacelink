@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=Dispatch
+Name=Spacelink
 Exec=@BINARY@
 Comment=Send SMS/MMS messages
 Icon=@APP_ID@
 Categories=COSMIC;Chat;InstantMessaging;
-Keywords=sms;chat;dispatch;
+Keywords=sms;chat;spacelink;
 Terminal=false
 Type=Application
 SingleMainWindow=true

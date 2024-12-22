@@ -1398,38 +1398,9 @@ dependencies = [
 
 [[package]]
 name = "dispatch"
-version = "0.1.0"
-dependencies = [
- "cfg-if",
- "futures-util",
- "i18n-embed",
- "i18n-embed-fl",
- "libcosmic",
- "libfeedback",
- "open",
- "rust-embed",
- "tokio",
- "tracing",
- "vergen",
- "zbus 5.2.0",
- "zspell",
-]
-
-[[package]]
-name = "dispatch"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd0c93bb4b0c6d9b77f4435b0ae98c24d17f1c45b2ff844c6151a07256ca923b"
-
-[[package]]
-name = "dispatchd"
-version = "0.1.0"
-dependencies = [
- "cfg-if",
- "modemmanager",
- "sqlite",
- "zbus 5.2.0",
-]
 
 [[package]]
 name = "displaydoc"
@@ -3815,7 +3786,7 @@ checksum = "0ee638a5da3799329310ad4cfa62fbf045d5f56e3ef5ba4149e7452dcf89d5a8"
 dependencies = [
  "bitflags 2.6.0",
  "block2",
- "dispatch 0.2.0",
+ "dispatch",
  "libc",
  "objc2",
 ]
@@ -4562,7 +4533,7 @@ checksum = "25a73a7337fc24366edfca76ec521f51877b114e42dab584008209cca6719251"
 dependencies = [
  "ashpd 0.8.1",
  "block",
- "dispatch 0.2.0",
+ "dispatch",
  "js-sys",
  "log",
  "objc",
@@ -5018,6 +4989,35 @@ dependencies = [
  "web-sys",
  "windows-sys 0.52.0",
  "x11rb",
+]
+
+[[package]]
+name = "spacelink"
+version = "0.1.0"
+dependencies = [
+ "cfg-if",
+ "futures-util",
+ "i18n-embed",
+ "i18n-embed-fl",
+ "libcosmic",
+ "libfeedback",
+ "open",
+ "rust-embed",
+ "tokio",
+ "tracing",
+ "vergen",
+ "zbus 5.2.0",
+ "zspell",
+]
+
+[[package]]
+name = "spacelinkd"
+version = "0.1.0"
+dependencies = [
+ "cfg-if",
+ "modemmanager",
+ "sqlite",
+ "zbus 5.2.0",
 ]
 
 [[package]]
