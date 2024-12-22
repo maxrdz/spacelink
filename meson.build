@@ -90,7 +90,7 @@ base_dir = join_paths(rootdir, prefix)
 bin_src = meson.project_build_root() / binary
 bin_dst = base_dir / 'bin' / binary
 
-subdir('res')
+subdir('resources')
 
 cargo_build = custom_target(
   'cargo-build',

@@ -1,5 +1,5 @@
 desktop = app_id + '.desktop'
-desktop_src = 'res' / desktop
+desktop_src = 'resources' / desktop
 desktop_dst = datadir / 'applications'
 
 appdata = app_id + '.metainfo.xml'
