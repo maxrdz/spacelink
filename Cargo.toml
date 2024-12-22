@@ -2,11 +2,11 @@
 resolver = "2"
 members = [
   "dispatch",
-  "dispatch-daemon",
+  "dispatchd",
 ]
 default-members = [
   "dispatch",
-  "dispatch-daemon",
+  "dispatchd",
 ]
 
 [workspace.package]

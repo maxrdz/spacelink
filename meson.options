@@ -21,6 +21,12 @@ option(
   description: 'Appends the -v flag when invoking cross. Applies if cross compiling.'
 )
 option(
+  'daemon-only',
+  type: 'boolean',
+  value: false,
+  description: 'Compiles only the daemon, and not the front end application.'
+)
+option(
   'use-feedbackd',
   type: 'boolean',
   value: true,

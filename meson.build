@@ -17,6 +17,7 @@ dependency('libfeedback-0.0', version: '>= 0', required: get_option('use-feedbac
 app_name = 'Dispatch'
 base_id = 'com.maxrdz.Dispatch'
 base_binary = 'dispatch'
+base_daemon_binary = base_binary + 'd'
 git_url = 'https://gitlab.com/maxrdz/dispatch'
 
 # Cargo build options and environment variables
@@ -24,22 +25,30 @@ cargo_opts = [ '--manifest-path', meson.project_source_root() / 'Cargo.toml' ]
 cargo_opts += [ '--target-dir', meson.project_build_root()  / 'target' ]
 cargo_opts += [ '--color=always' ]
 
+cargo_build_opts = []
+
 cargo_env = environment()
 cargo_env.set('CARGO_HOME', meson.project_build_root() / 'cargo-home')
+
+feature_flags = []
 
 if get_option('profile') == 'release'
   cargo_opts += [ '--release' ]
   rust_target = 'release'
 
   app_id = base_id
+
   binary = base_binary
+  daemon_binary = base_daemon_binary
 
   message('Building Dispatch for Release.')
 else
   rust_target = 'debug'
 
   app_id = '@0@.Debug'.format(base_id)
+
   binary = '@0@-debug'.format(base_binary)
+  daemon_binary = '@0@-debug'.format(base_daemon_binary)
 
   message('Building Dispatch for Debug.')
 endif
@@ -125,32 +134,18 @@ bin_dst = base_dir / 'bin' / binary
 subdir('resources')
 subdir('dispatch')
 
-cargo_build = custom_target(
+custom_target(
   'cargo-build',
   build_by_default: true,
   build_always_stale: true,
-  output: 'cargo_build', # See 'outdir' custom target
-  console: true,
-  env: cargo_env,
-  command: [
-    cargo_bin, 'build', cargo_opts,
-  ]
-)
-
-# Replace below with `--out-dir` cargo option once stable.
-# Issue: https://github.com/rust-lang/cargo/issues/6790
-custom_target(
-  'outdir',
-  build_by_default: true,
-  build_always_stale: true,
-  output: binary,
+  output: out_artifacts,
   console: true,
   install: true,
   install_dir: get_option('bindir'),
+  env: cargo_env,
   command: [
-    'cp', target_dir / base_binary, '@BUILD_ROOT@' / binary,
-  ],
-  depends: cargo_build
+    cargo_bin, 'build', cargo_opts, cargo_build_opts
+  ]
 )
 
 clippy = custom_target(
