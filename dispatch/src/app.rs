@@ -18,7 +18,7 @@
 */
 
 use crate::config::Config;
-use crate::fl;
+use crate::{fl, meson};
 use cosmic::app::{context_drawer, Core, Task};
 use cosmic::cosmic_config::{self, CosmicConfigEntry};
 use cosmic::iced::alignment::{Horizontal, Vertical};
@@ -28,8 +28,8 @@ use cosmic::{cosmic_theme, theme, Application, ApplicationExt, Apply, Element};
 use futures_util::SinkExt;
 use std::collections::HashMap;
 
-const VERSION: &str = env!("CARGO_PKG_VERSION");
-const REPOSITORY: &str = env!("CARGO_PKG_REPOSITORY");
+const VERSION: &str = meson::VERSION;
+const REPOSITORY: &str = meson::APP_REPO;
 
 cfg_if::cfg_if! {
     if #[cfg(debug_assertions)] {
@@ -76,7 +76,7 @@ impl Application for AppModel {
     type Message = Message;
 
     /// Unique identifier in RDNN (reverse domain name notation) format.
-    const APP_ID: &'static str = "com.maxrdz.Dispatch";
+    const APP_ID: &'static str = meson::APP_ID;
 
     fn core(&self) -> &Core {
         &self.core

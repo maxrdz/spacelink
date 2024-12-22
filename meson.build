@@ -74,6 +74,38 @@ if get_option('target') != ''
   )
 endif
 
+out_artifacts = []
+
+if get_option('daemon-only')
+  cargo_build_opts += [ '--package', base_daemon_binary ]
+  out_artifacts = [ base_binary ]
+else
+  cargo_build_opts += [ '--workspace' ]
+  out_artifacts = [ base_binary, base_daemon_binary ]
+endif
+
+if get_option('use-feedbackd')
+  feature_flags += [ 'use-feedbackd' ]
+endif
+
+# Convert FF list to argument string for --features option
+cargo_ff_arg = ''
+first_flag = false
+foreach ff : feature_flags
+  if first_flag == false
+    cargo_ff_arg += ff
+    first_flag = true
+  else
+    cargo_ff_arg += ',' + ff
+  endif
+endforeach
+
+if feature_flags.length() > 0
+  cargo_opts += [ '--no-default-features', '--features', cargo_ff_arg ]
+else
+  message('Building with default feature flags.')
+endif
+
 # Install Directories
 rootdir = ''
 prefix = get_option('prefix')
@@ -91,6 +123,7 @@ bin_src = meson.project_build_root() / binary
 bin_dst = base_dir / 'bin' / binary
 
 subdir('resources')
+subdir('dispatch')
 
 cargo_build = custom_target(
   'cargo-build',

@@ -23,6 +23,6 @@ option(
 option(
   'use-feedbackd',
   type: 'boolean',
-  value: false,
+  value: true,
   description: 'Compiles with support for feedbackd on mobile devices.'
 )
