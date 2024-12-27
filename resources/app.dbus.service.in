@@ -1,0 +1,5 @@
+[D-BUS Service]
+Name=@DBUS_NAME@
+Exec=@DAEMON_BINARY@
+User=root
+SystemdService=@APP_NAME@.service

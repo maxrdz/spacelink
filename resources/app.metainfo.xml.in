@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2024 Max Rodriguez <me@maxrdz.com> -->
+<component type="desktop-application">
+  <id>@APP_ID@</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Spacelink</name>
+  <summary>Send SMS/MMS messages</summary>
+  <description>
+    <p>A simple SMS application for the COSMIC shell.</p>
+  </description>
+  <icon type="remote" width="64" height="64" scale="1">
+    @PROJECT_GIT@/-/raw/master/res/icons/hicolor/scalable/apps/icon.svg
+  </icon>
+  <branding>
+    <color type="primary" scheme_preference="light">#00d046</color>
+    <color type="primary" scheme_preference="dark">#00d046</color>
+  </branding>
+  <!-- `developer_name` tag deprecated @ Appstream 1.0 -->
+  <developer_name translate="yes">Max Rodriguez</developer_name>
+  <developer id="com.maxrdz">
+    <name translate="yes">Max Rodriguez</name>
+  </developer>
+  <update_contact>me@maxrdz.com</update_contact>
+  <url type="vcs-browser">@PROJECT_GIT@</url>
+  <url type="homepage">@PROJECT_GIT@</url>
+  <url type="help">@PROJECT_GIT@</url>
+  <url type="bugtracker">@PROJECT_GIT@/-/issues</url>
+  <url type="donation">https://github.com/sponsors/maxrdz</url>
+  <url type="contribute">@PROJECT_GIT@/-/blob/master/CONTRIBUTING.md</url>
+  <launchable type="desktop-id">@APP_ID@.desktop</launchable>
+  <provides>
+    <id>@APP_ID@</id>
+    <binaries>
+      <binary>@BINARY@</binary>
+    </binaries>
+  </provides>
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
+  <releases>
+    <!-- Update release date on real first release of Spacelink.
+         CI/CD requires a release tag to be present in appdata file. -->
+    <release version="0.1.0" date="2024-12-18">
+      <url type="details">@PROJECT_GIT@/-/raw/master/CHANGELOG</url>
+      <description>
+        <p>
+          awaiting initial release
+        </p>
+      </description>
+    </release>
+  </releases>
+  <categories>
+    <category>COSMIC</category>
+    <category>Chat</category>
+    <category>InstantMessaging</category>
+  </categories>
+  <keywords>
+    <keyword translate="yes">spacelink</keyword>
+    <keyword translate="yes">messages</keyword>
+    <keyword translate="yes">text</keyword>
+    <keyword translate="yes">sms</keyword>
+  </keywords>
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-chat">intense</content_attribute>
+  </content_rating>
+  <custom>
+    <value key="Purism::form_factor">workstation,mobile</value>
+  </custom>
+</component>
+

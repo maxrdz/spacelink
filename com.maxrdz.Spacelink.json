@@ -1,0 +1,178 @@
+{
+    "app-id" : "com.maxrdz.Spacelink",
+    "runtime" : "org.freedesktop.Platform",
+    "runtime-version" : "24.08",
+    "sdk" : "org.freedesktop.Sdk",
+    "sdk-extensions" : [
+        "org.freedesktop.Sdk.Extension.rust-stable",
+	    "org.freedesktop.Sdk.Extension.llvm18"
+    ],
+    "command" : "spacelink",
+    "finish-args" : [
+        "--device=dri",
+        "--socket=wayland",
+        "--socket=fallback-x11",
+        "--socket=pulseaudio",
+        "--share=ipc",
+        "--env=RUST_BACKTRACE=0",
+        "--talk-name=org.sigxcpu.Feedback",
+        "--system-talk-name=org.freedesktop.ModemManager1",
+        "--talk-name=com.system76.CosmicSettingsDaemon",
+        "--filesystem=xdg-config/cosmic:rw"
+    ],
+    "build-options" : {
+        "append-path" : "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm18/bin",
+        "build-args" : [
+            "--share=network"
+        ]
+    },
+    "cleanup" : [
+        "/include",
+        "/lib/pkgconfig",
+        "/lib/cmake",
+        "/man",
+        "/share/doc",
+        "/share/man",
+        "/share/pkgconfig",
+        "*.la",
+        "*.a"
+    ],
+    "modules" : [
+        {
+            "name": "pam",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Ddocs=disabled",
+                "-Dexamples=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/linux-pam/linux-pam",
+                    "branch": "v1.7.0",
+                    "commit": "ea980d991196df67cdd56b3f65d210b73218d08a"
+                }
+            ]
+        },
+        {
+            "name": "polkit",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dlibs-only=true",
+                "-Dintrospection=false",
+                "-Dman=false",
+                "-Dgtk_doc=false",
+                "-Dexamples=false",
+                "-Dtests=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/polkit-org/polkit",
+                    "branch": "main"
+                }
+            ]
+        },
+        {
+            "name": "ModemManager",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dintrospection=false",
+                "-Dvapi=false",
+                "-Dudevdir=/app/lib",
+                "-Dsystemdsystemunitdir=/app/lib/systemd/system",
+                "-Dmbim=false",
+                "-Dqmi=false",
+                "-Dqrtr=false",
+                "-Dman=false",
+                "-Dgtk_doc=false",
+                "-Dexamples=false",
+                "-Dbash_completion=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.freedesktop.org/mobile-broadband/ModemManager",
+                    "tag": "1.22.0",
+                    "commit": "03f786ce66360d67c669f4f122f8aa458e6f01ea"
+                }
+            ]
+        },
+        {
+            "name": "feedbackd",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Ddaemon=false",
+                "-Dman=false",
+                "-Dgtk_doc=false",
+                "-Dtests=false",
+                "-Dvapi=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://source.puri.sm/Librem5/feedbackd",
+                    "branch": "main"
+                }
+            ]
+        },
+        {
+            "name": "just",
+            "buildsystem": "simple",
+            "build-commands": [
+                "install -Dm0755 just /app/bin/just"
+            ],
+            "cleanup": ["*"],
+            "sources": [
+                {
+                    "type": "archive",
+                    "strip-components": 0,
+                    "dest-filename": "just.tar.gz",
+                    "url": "https://github.com/casey/just/releases/download/1.35.0/just-1.35.0-x86_64-unknown-linux-musl.tar.gz",
+                    "sha256": "c4172306e241bd175c07316156a610593fa2b687ac49418520a375605d7cead4",
+                    "only_arches": [
+                        "x86_64"
+                    ]
+                },
+                {
+                    "type": "archive",
+                    "strip-components": 0,
+                    "dest-filename": "just.tar.gz",
+                    "url": "https://github.com/casey/just/releases/download/1.35.0/just-1.35.0-aarch64-unknown-linux-musl.tar.gz",
+                    "sha256": "a94c75426239fce8c1e7fdfccd20d60d987924f91ac45c843a14cd72d4d71e73",
+                    "only_arches": [
+                        "aarch64"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "cosmic-icons",
+            "buildsystem": "simple",
+            "build-commands": [
+                "sed -i \"s|prefix := '/usr'|prefix := '/app'|\" justfile",
+                "just install"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "dest-filename": "cosmic-icons-epoch-1.0.0-alpha.1.tar.gz",
+                    "url": "https://github.com/pop-os/cosmic-icons/archive/refs/tags/epoch-1.0.0-alpha.1.tar.gz",
+                    "sha256": "20d1a184c0421501e7ed8761f6e6178c3e16c787373357dae1d4dc22b9109428"
+                }
+            ]
+        },
+        {
+            "name" : "spacelink",
+            "buildsystem" : "meson",
+            "builddir" : true,
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : ".",
+                    "branch" : "master"
+                }
+            ]
+        }
+    ]
+}

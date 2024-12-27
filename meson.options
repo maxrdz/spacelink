@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (c) 2024 Max Rodriguez <me@maxrdz.com>
+
+option('profile', type: 'combo', choices: ['release', 'debug'], value: 'release', description: 'The build profile for Spacelink. `release` or `debug`.')
+option('daemon-only', type: 'boolean', value: false, description: 'Compiles only the daemon, and not the front end application.')
+
+option('target', type: 'string', value: '', description: 'Rustc cross-compilation target triple. Default is an empty string, which compiles natively.')
+option('cross-verbose', type: 'boolean', value: false, description: 'Appends the -v flag when invoking cross. Applies if cross compiling.')
+
+option('systemdsystemunitdir', type: 'string', value: '', description: 'Systemd system units directory')
+
+option('use-feedbackd', type: 'boolean', value: true, description: 'Compiles with support for feedbackd on mobile devices.')
