@@ -6,6 +6,13 @@ members = [
 ]
 default-members = []
 
+[profile.release]
+codegen-units = 1 # Best LLVM optimization
+panic = "abort" # Remove unwind code on release
+opt-level = 3
+lto = true
+strip = true
+
 [workspace.package]
 license = "GPL-3.0-or-later"
 version = "0.1.0"
