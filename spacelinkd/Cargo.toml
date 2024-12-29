@@ -9,6 +9,6 @@ repository.workspace = true
 [dependencies]
 cfg-if.workspace = true
 modemmanager = { git = "https://github.com/omnect/modemmanager.git" }
+smol = "2.0"
 sqlite = "0.36"
-tokio = { version = "1.41", features = ["rt"] }
 zbus.workspace = true

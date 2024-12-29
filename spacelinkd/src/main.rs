@@ -19,20 +19,30 @@
 
 mod meson;
 
-use tokio::runtime::{Builder, Runtime};
+use smol::prelude::*;
+use std::future::pending;
 use zbus::{connection, interface};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let tokio_rt: Runtime = Builder::new_current_thread()
-        .thread_stack_size(2 * 1024 * 1024)
-        .build()
-        .expect("Failed to start Tokio async runtime.");
+#[derive(Default)]
+struct Greeter;
 
-    tokio_rt.block_on(async {
+#[interface(name = "com.maxrdz.Spacelink.Daemon1")]
+impl Greeter {
+    fn say_hello(&mut self, name: &str) -> String {
+        format!("Hello {}! I have been called.", name)
+    }
+}
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    smol::block_on(async {
         let connection = connection::Builder::session()?
             .name(meson::DBUS_NAME)?
+            .serve_at("/com/maxrdz/Spacelink/Daemon", Greeter::default())?
             .build()
             .await?;
+
+        // Do other things or go to wait forever
+        pending::<()>().await;
 
         Ok(())
     })
