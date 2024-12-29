@@ -41,7 +41,7 @@ cfg_if::cfg_if! {
 
 /// The application model stores app-specific state used to describe its interface and
 /// drive its logic.
-pub struct AppModel {
+pub struct Spacelink {
     /// Application state which is managed by the COSMIC runtime.
     core: Core,
     /// Display a context drawer with the designated page if defined.
@@ -65,7 +65,7 @@ pub enum Message {
 }
 
 /// Create a COSMIC application from the app model
-impl Application for AppModel {
+impl Application for Spacelink {
     /// The async executor that will be used to run your application's commands.
     type Executor = cosmic::executor::Default;
 
@@ -108,7 +108,7 @@ impl Application for AppModel {
             .icon(icon::from_name("applications-games-symbolic"));
 
         // Construct the app model with the runtime's core.
-        let mut app = AppModel {
+        let mut app = Spacelink {
             core,
             context_page: ContextPage::default(),
             nav,
@@ -257,7 +257,7 @@ impl Application for AppModel {
     }
 }
 
-impl AppModel {
+impl Spacelink {
     /// The about page for this app.
     pub fn about(&self) -> Element<Message> {
         let cosmic_theme::Spacing { space_xxs, .. } = theme::active().cosmic().spacing;

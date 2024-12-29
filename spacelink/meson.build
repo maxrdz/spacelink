@@ -52,7 +52,7 @@ else
 endif
 
 crate_build = custom_target(
-  'spacelink',
+  'spacelink-build',
   build_by_default: true,
   build_always_stale: true,
   output: 'spacelink-cargo-build', # see `spacelink-wrapper` target
@@ -66,16 +66,16 @@ crate_build = custom_target(
 # Replace below with `--artifact-dir` cargo option once stable.
 # Issue: https://github.com/rust-lang/cargo/issues/6790
 custom_target(
-  'spacelink-wrapper',
+  'spacelink',
   build_by_default: true,
   build_always_stale: true,
-  output: base_binary,
+  output: binary,
   console: true,
   install: true,
   install_dir: get_option('bindir'),
   env: cargo_env,
   command: [
-    'cp', target_dir / base_binary, '@BUILD_ROOT@' / binary,
+    'cp', target_dir / base_binary, '@BUILD_ROOT@' / base_binary / binary,
   ],
   depends: crate_build,
 )
