@@ -78,14 +78,14 @@ mute-conversation = Mute Conversation
 delete-conversation = Delete Conversation
 conversation-details = Chat Details
 
-#### Message
+### Message
 message-sent = Sent
 message-delivered = Delivered
 message-read = Read
 copy-message = Copy to Clipboard
 delete-message = Delete Message Locally
 
-#### Message Timestamp
+### Message Timestamp
 just-now = Just Now
 today = Today
 yesterday = Yesterday
