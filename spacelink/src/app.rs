@@ -19,10 +19,12 @@
 
 use crate::config::Config;
 use crate::{fl, meson};
-use cosmic::app::{context_drawer, Core, Task};
+use cosmic::app::context_drawer::{about, ContextDrawer};
+use cosmic::app::{Core, Task};
 use cosmic::cosmic_config::{self, CosmicConfigEntry};
 use cosmic::iced::alignment::{Horizontal, Vertical};
 use cosmic::iced::{Alignment, Length, Subscription};
+use cosmic::widget::about::About;
 use cosmic::widget::{self, icon, menu, nav_bar};
 use cosmic::{cosmic_theme, theme, Application, ApplicationExt, Apply, Element};
 use futures_util::SinkExt;
@@ -31,19 +33,13 @@ use std::collections::HashMap;
 const VERSION: &str = meson::VERSION;
 const REPOSITORY: &str = meson::APP_REPO;
 
-cfg_if::cfg_if! {
-    if #[cfg(debug_assertions)] {
-        const APP_ICON: &[u8] = include_bytes!("../../resources/icons/hicolor/scalable/apps/icon-debug.svg");
-    } else {
-        const APP_ICON: &[u8] = include_bytes!("../../resources/icons/hicolor/scalable/apps/icon.svg");
-    }
-}
-
 /// The application model stores app-specific state used to describe its interface and
 /// drive its logic.
 pub struct Spacelink {
     /// Application state which is managed by the COSMIC runtime.
     core: Core,
+    /// About widget
+    about: About,
     /// Display a context drawer with the designated page if defined.
     context_page: ContextPage,
     /// Contains items assigned to the nav bar panel.
@@ -92,24 +88,15 @@ impl Application for Spacelink {
         let mut nav = nav_bar::Model::default();
 
         nav.insert()
-            .text(fl!("page-id", num = 1))
-            .data::<Page>(Page::Page1)
-            .icon(icon::from_name("applications-science-symbolic"))
+            .text(fl!("messages"))
+            .data::<Page>(Page::Messages)
+            .icon(icon::from_name("mail-message-new-symbolic"))
             .activate();
-
-        nav.insert()
-            .text(fl!("page-id", num = 2))
-            .data::<Page>(Page::Page2)
-            .icon(icon::from_name("applications-system-symbolic"));
-
-        nav.insert()
-            .text(fl!("page-id", num = 3))
-            .data::<Page>(Page::Page3)
-            .icon(icon::from_name("applications-games-symbolic"));
 
         // Construct the app model with the runtime's core.
         let mut app = Spacelink {
             core,
+            about: Self::create_about(),
             context_page: ContextPage::default(),
             nav,
             key_binds: HashMap::new(),
@@ -140,7 +127,7 @@ impl Application for Spacelink {
             menu::root(fl!("view")),
             menu::items(
                 &self.key_binds,
-                vec![menu::Item::Button(fl!("about"), None, MenuAction::About)],
+                vec![menu::Item::Button(fl!("menu-about"), None, MenuAction::About)],
             ),
         )]);
 
@@ -153,16 +140,17 @@ impl Application for Spacelink {
     }
 
     /// Display a context drawer if the context page is requested.
-    fn context_drawer(&self) -> Option<context_drawer::ContextDrawer<Self::Message>> {
+    fn context_drawer(&self) -> Option<ContextDrawer<Message>> {
         if !self.core.window.show_context {
             return None;
         }
 
         Some(match self.context_page {
-            ContextPage::About => {
-                context_drawer::context_drawer(self.about(), Message::ToggleContextPage(ContextPage::About))
-                    .title(fl!("about"))
-            }
+            ContextPage::About => about(
+                &self.about,
+                Message::LaunchUrl,
+                Message::ToggleContextPage(ContextPage::About),
+            ),
         })
     }
 
@@ -258,42 +246,29 @@ impl Application for Spacelink {
 }
 
 impl Spacelink {
-    /// The about page for this app.
-    pub fn about(&self) -> Element<Message> {
-        let cosmic_theme::Spacing { space_xxs, .. } = theme::active().cosmic().spacing;
-
-        let icon = widget::svg(widget::svg::Handle::from_memory(APP_ICON));
-
-        let title = widget::text::title3(fl!("app-title"));
-
-        let version = widget::text::title4(VERSION);
-
+    /// Create the About widget
+    pub fn create_about() -> About {
         let hash = env!("VERGEN_GIT_SHA");
         let short_hash: String = hash.chars().take(7).collect();
         let date = env!("VERGEN_GIT_COMMIT_DATE");
 
-        let link = widget::button::link(REPOSITORY)
-            .on_press(Message::OpenRepositoryUrl)
-            .padding(0);
-
-        widget::column()
-            .push(icon)
-            .push(title)
-            .push(version)
-            .push(link)
-            .push(
-                widget::button::link(fl!("git-description", hash = short_hash.as_str(), date = date))
-                    .on_press(Message::LaunchUrl(format!("{REPOSITORY}/commits/{hash}")))
-                    .padding(0),
-            )
-            .align_x(Alignment::Center)
-            .spacing(space_xxs)
-            .into()
+        About::default()
+            .name(fl!("spacelink"))
+            .icon(Self::APP_ID)
+            .comments(fl!("git-description", hash = short_hash.as_str(), date = date))
+            .version(VERSION)
+            .author("Max Rodriguez")
+            .license("GPL-3.0")
+            .links([
+                (fl!("support"), meson::APP_REPO),
+                (fl!("repository"), meson::APP_REPO),
+            ])
+            .developers([("Max Rodriguez".into(), "me@maxrdz.com".into())])
     }
 
     /// Updates the header and window titles.
     pub fn update_title(&mut self) -> Task<Message> {
-        let mut window_title = fl!("app-title");
+        let mut window_title = fl!("spacelink");
 
         if let Some(page) = self.nav.text(self.nav.active()) {
             window_title.push_str(" — ");
@@ -310,9 +285,7 @@ impl Spacelink {
 
 /// The page to display in the application.
 pub enum Page {
-    Page1,
-    Page2,
-    Page3,
+    Messages,
 }
 
 /// The context page to display in the context drawer.
