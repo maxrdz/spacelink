@@ -258,7 +258,7 @@ impl Spacelink {
             .comments(fl!("git-description", hash = short_hash.as_str(), date = date))
             .version(VERSION)
             .author("Max Rodriguez")
-            .license("GPL-3.0")
+            .license("GPL-3.0-or-later")
             .links([
                 (fl!("support"), meson::APP_REPO),
                 (fl!("repository"), meson::APP_REPO),
