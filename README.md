@@ -88,7 +88,7 @@ Copyright (c) 2024 Max Rodriguez <me@maxrdz.com>
 
 "Spacelink" can be found at https://gitlab.com/maxrdz/spacelink
 
-"Spacelink" is distributed under the terms of the GNU Affero General Public
+"Spacelink" is distributed under the terms of the GNU General Public
 License, either version 3.0 or, at your option, any later
 version WITHOUT ANY WARRANTY. You can read the full copy of
 the software license in the COPYING file.
