@@ -21,6 +21,7 @@ mod app;
 mod config;
 mod i18n;
 mod meson;
+mod model;
 mod views;
 
 fn main() -> cosmic::iced::Result {
@@ -42,5 +43,5 @@ fn main() -> cosmic::iced::Result {
     }
 
     // Starts the application's event loop with `()` as the application's flags.
-    cosmic::app::run::<app::Spacelink>(settings, ())
+    cosmic::app::run::<app::Spacelink>(settings, config::flags())
 }

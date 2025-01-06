@@ -17,15 +17,27 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-use crate::app::{Message, Spacelink};
-use cosmic::Application;
-use cosmic::Element;
+pub mod mms;
+pub mod sms;
 
-impl Spacelink
+use std::hash::{DefaultHasher, Hash, Hasher};
+
+/// Represents a type of SMS/MMS conversation.
+pub enum Conversation {
+    Individual(sms::SmsConversation),
+    Group(mms::MmsGroupChat),
+}
+
+type ModelHash = u64;
+
+trait Hashable
 where
-    Self: Application,
+    Self: Hash,
 {
-    pub fn view_messages(&self) -> Element<Message> {
-        cosmic::widget::text::body("Spacelink!!").into()
+    fn get_hash(model: impl Hash) -> ModelHash {
+        let mut state = DefaultHasher::default();
+
+        model.hash(&mut state);
+        state.finish()
     }
 }

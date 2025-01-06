@@ -21,7 +21,9 @@ i18n-embed-fl = "0.9.2"
 libcosmic.workspace = true
 libfeedback = { git = "https://gitlab.gnome.org/guidog/libfeedback-rs.git", optional = true }
 open = "5.3.0"
+phonenumber.workspace = true
 rust-embed = "8.5.0"
+serde.workspace = true
 tokio.workspace = true
 tracing.workspace = true
 zbus.workspace = true

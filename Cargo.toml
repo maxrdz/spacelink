@@ -38,6 +38,8 @@ pre-build = [
 
 [workspace.dependencies]
 cfg-if = "1"
+phonenumber = "0.3"
+serde = "1.0"
 tokio = { version = "1.41.0", features = ["full"] }
 tracing = "0.1.41"
 zbus = "5.2"

@@ -17,15 +17,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-use crate::app::{Message, Spacelink};
-use cosmic::Application;
-use cosmic::Element;
+use super::sms::SmsContactHash;
 
-impl Spacelink
-where
-    Self: Application,
-{
-    pub fn view_messages(&self) -> Element<Message> {
-        cosmic::widget::text::body("Spacelink!!").into()
+pub struct MmsGroupChat {
+    title: Option<String>,
+    photo: Option<MmsGroupChatHash>,
+    participants: Vec<SmsContactHash>,
+    muted: bool,
+}
+
+pub type MmsGroupChatHash = super::ModelHash;
+
+impl std::hash::Hash for MmsGroupChat {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.participants.hash(state);
     }
 }
+
+impl super::Hashable for MmsGroupChat {}
